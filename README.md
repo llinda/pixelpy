@@ -1,6 +1,16 @@
 #pixelpy
-PixelPy is a tool to make it easier to label pixel coordinates of areas in images. This was written specifically to label 
-the positions of items within visual scenes so that this data could then be used to configure an eyetracking experiment.
+PixelPy is a tool that makes it easier to label pixel coordinates of areas in images. This was written 
+specifically to label items within visual scenes for an eyetracking experiment. Basically, it lets you draw a rectangle 
+or oval directly onto an image and outputs the coordinates of the shape to an output file. 
+
+Hopefully it'll make your life easier. 
+
+##Features
+- Label as many images as you want
+- Label as many sections within the images as you want
+- Label as rectangles or ovals
+- Instructions can be different for each image
+- Saves coordinate information in computer-readable format
 
 ##Configuration
 Before you can use PixelPy, you have to figure configure it to work with the directories you want. It's pretty easy to configure... I've included a sample
