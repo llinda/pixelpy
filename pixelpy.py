@@ -7,7 +7,8 @@ class LabelingApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.x = self.y = 0
-        self.canvas = tk.Canvas(self, width=cfg.CANVAS_SIZE_WIDTH, height=cfg.CANVAS_SIZE_HEIGHT, cursor="cross")
+        self.frame = tk.Frame(self, width=cfg.WINDOW_SIZE_WIDTH, height=cfg.WINDOW_SIZE_HEIGHT)
+        self.canvas = tk.Canvas(self.frame, width=cfg.WINDOW_SIZE_WIDTH, height=cfg.WINDOW_SIZE_HEIGHT, scrollregion=(0,0,cfg.CANVAS_SIZE_WIDTH, cfg.CANVAS_SIZE_HEIGHT), cursor="cross")
         
         self.image_list = []
         self.completed = 0
@@ -18,9 +19,21 @@ class LabelingApp(tk.Tk):
         self.end_x = None
         self.end_y = None
 
+        self._setup_scroll()
         self._bind_keys()
         self._read_list()
         self._draw_image()
+
+    def _setup_scroll(self):
+        self.frame.pack()
+        hbar = tk.Scrollbar(self.frame, orient=tk.HORIZONTAL)
+        hbar.pack(side=tk.BOTTOM,fill=tk.X)
+        hbar.config(command=self.canvas.xview)
+        vbar=tk.Scrollbar(self.frame,orient=tk.VERTICAL)
+        vbar.pack(side=tk.RIGHT,fill=tk.Y)
+        vbar.config(command=self.canvas.yview)
+        self.canvas.config(xscrollcommand=hbar.set, yscrollcommand=vbar.set)
+        self.canvas.pack(side=tk.LEFT,expand=True,fill=tk.BOTH)
 
     def _bind_keys(self):
         self.canvas.pack(side="top", fill="both", expand=True)
@@ -39,13 +52,27 @@ class LabelingApp(tk.Tk):
             print "Input file {0} not found. Did you set up cfg.py properly?".format(cfg.INPUT_FILE)
             quit()
 
+    def _normalize_coordinates(self):
+        '''Normalizes in case the user drags from bottom-right to top-left. Also prevents dragging to pixels outside the image.
+        '''
+        if self.start_x > self.end_x and self.start_y > self.end_y:
+            ((self.start_x, self.start_y), (self.end_x, self.end_y)) = ((self.end_x, self.end_y), (self.start_x, self.start_y)) 
+        if self.start_x < 0:
+            self.start_x = 0
+        if self.start_y < 0:
+            self.start_y = 0
+        if self.end_x > self.tk_im.width():
+            self.end_x = self.tk_im.width()
+        if self.end_y > self.tk_im.height():
+            self.end_y = self.tk_im.height()
+
     def _draw_image(self):
         if self.image_list:
             try:
                 self.im = Image.open(self.image_list[0][0])
                 self.tk_im = ImageTk.PhotoImage(self.im)
                 self.canvas.create_image(0,0,anchor="nw",image=self.tk_im)
-                self.wm_title("Label List: {0}".format(" ".join(self.image_list[0][1:])))
+                self.wm_title("Instructions: {0}".format(" ".join(self.image_list[0][1:])))
             except IOError:
                 print "Image {0} not found. Aborting.".format(self.image_list[0][0])
                 quit()
@@ -59,8 +86,9 @@ class LabelingApp(tk.Tk):
         # save mouse drag start position
         self.end_x = None
         self.end_y = None
-        self.start_x = event.x
-        self.start_y = event.y
+        c = event.widget
+        self.start_x = c.canvasx(event.x)
+        self.start_y = c.canvasy(event.y)
 
         # create shape 
         if cfg.SHAPE == "rectangle":
@@ -74,7 +102,7 @@ class LabelingApp(tk.Tk):
 
     def on_mouse_move(self, event):
         #http://stackoverflow.com/questions/24135170/drawing-rectangle-using-mouse-events-in-tkinter for sections drag-drop behavior of shapes
-        curX, curY = (event.x, event.y)
+        curX, curY = self.canvas.canvasx(event.x), self.canvas.canvasy(event.y)
         self.end_x = curX
         self.end_y = curY
         # expand as you drag the mouse
@@ -87,6 +115,7 @@ class LabelingApp(tk.Tk):
     def on_finish(self, event):
         #A shape has been found
         if self.start_x and self.start_y and self.end_x and self.end_y:
+            self._normalize_coordinates()
             noun = tkSimpleDialog.askstring("Label Area", cfg.PROMPT)
             if noun: #user didn't hit cancel
                 with open(cfg.OUTPUT_FILE, "a") as f:
