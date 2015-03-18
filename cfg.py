@@ -8,8 +8,8 @@ INPUT_FILE = "sample/image_list.txt"
 DELIM = "|"
 
 LABELS_PER_IMG = 2 #How many areas will be labeled in each image?
-SHAPE = "oval" #What shapes are we drawing?
-SHAPE_COLOR = "red"
+SHAPE = "rectangle" #What shapes are we drawing?
+SHAPE_COLOR = "blue"
 
 #Output 
 OUTPUT_FILE = "sample/output.txt"

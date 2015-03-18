@@ -91,6 +91,8 @@ class LabelingApp(tk.Tk):
                 with open(cfg.OUTPUT_FILE, "a") as f:
                     f.write("{0}|{1}|{2}|{3}|{4}|{5}\n".format(self.image_list[0][0], noun, self.start_x, self.start_y, self.end_x, self.end_y))
                 self.completed += 1
+                if self.shape:
+                    self.canvas.delete(self.shape)
         else:
             print "Nothing here to label..."
         if self.completed >= cfg.LABELS_PER_IMG:
