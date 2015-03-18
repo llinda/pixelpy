@@ -1,7 +1,7 @@
 import Tkinter as tk 
 from PIL import Image, ImageTk
 import tkSimpleDialog
-import cfg
+import cfg  #Personal config file
 
 class LabelingApp(tk.Tk):
     def __init__(self):
@@ -62,7 +62,7 @@ class LabelingApp(tk.Tk):
         self.start_x = event.x
         self.start_y = event.y
 
-        # create rectangle
+        # create shape 
         if cfg.SHAPE == "rectangle":
             self.shape = self.canvas.create_rectangle(self.x, self.y, 1, 1, outline=cfg.SHAPE_COLOR)
         else:
@@ -73,6 +73,7 @@ class LabelingApp(tk.Tk):
                 quit()
 
     def on_mouse_move(self, event):
+        #http://stackoverflow.com/questions/24135170/drawing-rectangle-using-mouse-events-in-tkinter for sections drag-drop behavior of shapes
         curX, curY = (event.x, event.y)
         self.end_x = curX
         self.end_y = curY
@@ -90,6 +91,7 @@ class LabelingApp(tk.Tk):
             if noun: #user didn't hit cancel
                 with open(cfg.OUTPUT_FILE, "a") as f:
                     f.write("{0}|{1}|{2}|{3}|{4}|{5}\n".format(self.image_list[0][0], noun, self.start_x, self.start_y, self.end_x, self.end_y))
+                    print "{0}, {1}, {2}, {3} written to {4}".format(self.start_x, self.start_y, self.end_x, self.end_y, cfg.OUTPUT_FILE)
                 self.completed += 1
                 if self.shape:
                     self.canvas.delete(self.shape)
