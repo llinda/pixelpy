@@ -6,24 +6,33 @@ the positions of items within visual scenes so that this data could then be used
 Before you can use PixelPy, you have to figure configure it to work with the directories you want. It's pretty easy to configure... I've included a sample
 configuration file that works with the included sample.
 
+You can label as many images as you want by specifying them in the config. You can also choose to label more than one section within each image.
+
 ##Usage
+
+I've included a fully working sample to get you started:
 
 ```python pixelpy.py```
 
 This will open up a separate GUI window. Instructions for each images are shown in the window header.
+
 ![Separate window](https://raw.githubusercontent.com/llinda/pixelpy/master/screenshots/pixelpy_sample1.png)
 
 By clicking and dragging, you can draw a rectangle or oval in whatever color you want (depending on your configuration). Coordinates won't be saved unless you
 press Enter, so keep drawing until you draw around the area you want.
+
 ![Drag and click](https://raw.githubusercontent.com/llinda/pixelpy/master/screenshots/pixelpy_sample2.png)
 
 Press Enter to save the coordinates (upper left, bottom right) of the shape that you drew. Label it so you can remember what you labeled.
+
 ![Drag and click](https://raw.githubusercontent.com/llinda/pixelpy/master/screenshots/pixelpy_sample3.png)
 
-##Output
+The program will automatically move on to the next image once you've labeled as many areas as specified in the config.
+
+##Output Format
 Output is appended to the output file in the format:
 `filename|label|upper_left_x_coordinate|upper_left_y_coordinate|bottom_right_x_coordinate|bottom_right_y_coordinate`
 
-
-
-
+##Disclaimer
+Not sure how easy or difficult this would be to get working on a windows computer. 
+There's also no memory component of this program -- it will NOT remember whether you have already labeled part or all of an image. If you stop halfway, you'll have to remember it yourself for now. 
