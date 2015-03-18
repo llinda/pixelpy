@@ -11,7 +11,7 @@ configuration file that works with the included sample.
 ```python pixelpy.py```
 
 This will open up a separate GUI window.
-![Separate window](https://raw.githubusercontent.com/llinda/pixelpy/master/screenshots/1.png)
+![Separate window](https://raw.githubusercontent.com/llinda/pixelpy/master/screenshots/pixelpy_sample1.png)
 
 
 
