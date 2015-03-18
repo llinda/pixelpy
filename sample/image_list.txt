@@ -1,0 +1,2 @@
+sample/cats.jpg|Label both of the wooden cats
+sample/cats2.jpg|Label both of the real cats
