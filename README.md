@@ -5,18 +5,11 @@ or oval directly onto an image and outputs the coordinates of the shape to an ou
 
 Hopefully it'll make your life easier. 
 
-##Features
-- Label as many images as you want
-- Label as many sections within the images as you want
-- Label as rectangles or ovals
-- Instructions can be different for each image
-- Saves coordinate information in computer-readable format
-
 ##Configuration
-Before you can use PixelPy, you have to figure configure it to work with the directories you want. It's pretty easy to configure... I've included a sample
-configuration file that works with the included sample.
-
-You can label as many images as you want by specifying them in the config. You can also choose to label more than one section within each image.
+Before you can use PixelPy, you have to configure it to work the way you want.
+This is super easy to do, and I've included a sample
+configuration file that works with the included sample (cfg.py). You'll want to change the config file slightly
+so that it uses the images and instructions that you want for your task.
 
 ##Usage
 
@@ -42,6 +35,13 @@ The program will automatically move on to the next image once you've labeled as 
 ##Output Format
 Output is appended to the output file in the format:
 `filename|label|upper_left_x_coordinate|upper_left_y_coordinate|bottom_right_x_coordinate|bottom_right_y_coordinate`
+
+##Features
+- Label as many images as you want
+- Label as many sections within the images as you want
+- Label as rectangles or ovals
+- Instructions can be different for each image
+- Saves coordinate information in computer-readable format
 
 ##Disclaimer
 Not sure how easy or difficult this would be to get working on a windows computer. 
