@@ -13,6 +13,14 @@ so that it uses the images and instructions that you want for your task.
 
 ##Usage
 
+Make sure you have the Python Imaging Library installed. If not, 
+
+```easy_install Pillow``` 
+
+or
+
+```pip install Pillow```
+
 I've included a fully working sample to get you started:
 
 ```python pixelpy.py```
@@ -44,5 +52,4 @@ Output is appended to the output file in the format:
 - Saves coordinate information in computer-readable format
 
 ##Disclaimer
-Not sure how easy or difficult this would be to get working on a windows computer. 
 There's also no memory component of this program -- it will NOT remember whether you have already labeled part or all of an image. If you stop halfway, you'll have to remember it yourself for now. 
